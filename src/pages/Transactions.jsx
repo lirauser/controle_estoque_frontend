@@ -4,36 +4,36 @@ import ApiService from "../services/ApiService";
 import { useNavigate } from "react-router-dom";
 
 const Transactions = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [transacoes, setTransacoes] = useState([]);
   const [mensagem, setMensagem] = useState("");
   const [filter, setFilter] = useState("");
-  const [valorAPesquisar, setValorAPesquisar] = useState("");
+  const [valueToSearch, setValueToSearch] = useState("");
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    const getTransactions = async () => {
+    const getTransacoes = async () => {
       try {
-        const transactionData = await ApiService.listarTransacoes();
-        console.log("Transacao: " + transactionData.transactions);          
-        if (transactionData.status === 200) {
-          console.log("Entrou...");
-          setTransactions(transactionData.transactions);
-        }             
+        const transactionData = await ApiService.listarTransacoes(valueToSearch);
+
+        if (transactionData.status === 200) {          
+          console.log("Pegou as transações!!");
+          console.log("Transacao: " + transactionData.transacoes);
+          setTransacoes(transactionData.transacoes);
+        }
       } catch (error) {
-        showMensagem(
-          error.response?.data?.mensagem || "Erro ao exibir transações: " + error
+        showMessage(
+          "Error ao listar transações: " + error
         );
       }
     };
 
-    getTransactions();
-  }, [valorAPesquisar]);
+    getTransacoes();
+  }, [valueToSearch]);
 
 
-
-  //Method to show mensagem or errors
-  const showMensagem = (msg) => {
+  //Method to show message or errors
+  const showMessage = (msg) => {
     setMensagem(msg);
     setTimeout(() => {
       setMensagem("");
@@ -43,54 +43,45 @@ const Transactions = () => {
 
   //handle search
   const handleSearch = () =>{
-    console.log("Busca")
-    console.log("FILTRO: " + filter)    
-    setValorAPesquisar(filter)
+    console.log("Search hit")
+    console.log("FILTER IS: " + filter)       
+    setValueToSearch(filter)
   }
 
-  //Navigate to transactions details page
+  //Navigate to transacoes details page
   const navigateToTransactionDetailsPage = (transactionId) =>{
-    navigate(`/transaction/${transactionId}`);
+    navigate(`/transactions/${transactionId}`);
   }
 
   return (
     <Layout>
-      {mensagem && <p className="mensagem">{mensagem}</p>}
+      {mensagem && <div className="message">{mensagem}</div>}
       <div className="transactions-page">
         <div className="transactions-header">
-            <h1>Transactions</h1>
-            <div className="transaction-search">
-                <input 
-                value={filter}
-                type="text"
-                placeholder="Procurar transacao..."                
-                onChange={(e)=> setFilter(e.target.value)} />
-                <button onClick={()=> handleSearch()} > Buscar</button>
-            </div>
+            <h1>Movimentação Estoque</h1>            
         </div>
 
-        {transactions && 
+        {transacoes &&
             <table className="transactions-table">
                 <thead>
                     <tr>
                         <th>TIPO</th>
                         <th>STATUS</th>
                         <th>PREÇO TOTAL</th>
-                        <th>TOTAL DE PRODUTOS</th>
+                        <th>QTD MOVIMENTADA</th>
                         <th>DATA</th>
-                        <th>DESCRIÇÃO</th>
+                        <th>AÇÕES</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    {transactions.map((transaction) => (
+                    {transacoes.map((transaction) => (
                         <tr key={transaction.id}>
                             <td>{transaction.tipoMovimentacao}</td>
                             <td>{transaction.status}</td>
                             <td>{transaction.totalPreco}</td>
                             <td>{transaction.totalProdutos}</td>
                             <td>{new Date(transaction.criadoEm).toLocaleString()}</td>
-                            <td>{transaction.descricao}</td>
                             <td>
                                 <button onClick={()=> navigateToTransactionDetailsPage(transaction.id)}>Detalhar</button>
                             </td>
@@ -98,7 +89,7 @@ const Transactions = () => {
                     ))}
                 </tbody>
             </table>
-        }
+          }
       </div>      
     </Layout>
   );

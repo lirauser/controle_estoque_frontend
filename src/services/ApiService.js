@@ -29,8 +29,8 @@ export default class ApiService {
         const response = await axios.get(`${this.BASE_URL}/produtos/all`, {
             headers: {
                 "Content-type" : 'application/json'
-            },            
-        });
+            }                       
+        })
         return response.data;
     }
 
@@ -39,7 +39,7 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },            
-        });
+        })
         return response.data;
     }
 
@@ -49,7 +49,7 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },
-        });
+        })
         return response.data;
     }
 
@@ -58,7 +58,7 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },            
-        });
+        })
         return response.data;
     }
 
@@ -88,16 +88,16 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },            
-        });
+        })
         return response.data;
-    }
+    } 
 
     static async buscarTipoProdutoPorId(tipoProdutoId) {
         const response = await axios.get(`${this.BASE_URL}/tipoProdutos/${tipoProdutoId}`, {
             headers: {
                 "Content-type" : 'application/json'
             },            
-        });
+        })
         return response.data;
     }    
 
@@ -106,7 +106,7 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },            
-        });
+        })
         return response.data;
     }
 
@@ -136,7 +136,7 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },            
-        });
+        })
         return response.data;
     }
     
@@ -154,7 +154,7 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },            
-        });
+        })
         return response.data;
     }
 
@@ -206,7 +206,7 @@ export default class ApiService {
                 month:month,
                 year:year
             }          
-        });
+        })
         return response.data;
     }
 
@@ -215,7 +215,7 @@ export default class ApiService {
             headers: {
                 "Content-type" : 'application/json'
             },                  
-        });
+        })
         return response.data;
     }
     

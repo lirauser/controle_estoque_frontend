@@ -13,7 +13,8 @@ const Fornecedor = () => {
     const getFornecedores = async () => {
       try {
         const responseData = await ApiService.obterFornecedores();        
-        if (responseData.status === 200) {          
+        if (responseData.status === 200) { 
+          console.log("Fornecedores: " + responseData.fornecedores);         
           setFornecedores(responseData.fornecedores);
         } else {
           showMensagem(responseData.mensagem);
@@ -21,8 +22,7 @@ const Fornecedor = () => {
       } catch (error) {
         showMensagem(
           "Erro ao recuperar fornecedores: " + error
-        );
-        console.log(error);
+        );        
       }
     };
     getFornecedores();
@@ -52,7 +52,7 @@ const handleDeleteFornecedor = async (fornecedorId) => {
 
 return(
     <Layout>
-        {mensagem && <div className="mensagem">{mensagem}</div>}
+        {mensagem && <div className="message">{mensagem}</div>}
         <div className="supplier-page">
             <div className="supplier-header">
                 <h1>Fornecedores</h1>
@@ -63,22 +63,19 @@ return(
         </div>
 
         {fornecedores && 
-        <ul className="supplier-list">
-            
+        <ul className="supplier-list">            
             {fornecedores.map((fornecedor) => (
                 <li className="supplier-item" key={fornecedor.id}>
                     <span>{fornecedor.nomeFornecedor}</span>
 
                     <div className="supplier-actions">
-                        <button onClick={()=> navigate(`/edit-fornecedor/${fornecedor.id}`)} >Edit</button>
-                        <button onClick={()=> handleDeleteFornecedor(fornecedor.id)} >Delete</button>
+                        <button onClick={()=> navigate(`/edit-fornecedor/${fornecedor.id}`)} >Editar</button>
+                        <button onClick={()=> handleDeleteFornecedor(fornecedor.id)} >Remover</button>
                     </div>
 
                 </li>
             ))}
-
-        </ul>
-        
+        </ul>        
         }
     </Layout>
 )

@@ -118,7 +118,6 @@ const Venda = () => {
             />
           </div>
 
-
           <button type="submit">Vender produto</button>
         </form>
       </div>

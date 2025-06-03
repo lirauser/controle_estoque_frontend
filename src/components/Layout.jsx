@@ -1,10 +1,10 @@
 import React from 'react';
-import NavBar from './NavBar';
+import MenuLateral from './MenuLateral';
 
 const Layout = ({children}) => {
     return(
         <div className="layout">
-            <NavBar />
+            <MenuLateral />
             <div className="main-content">
                 {children}
             </div>

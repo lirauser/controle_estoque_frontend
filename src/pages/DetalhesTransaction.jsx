@@ -5,13 +5,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 
 const DetalhesTransaction = () => {
-  const { transactionId } = useParams();
+  const {transactionId} = useParams();
   const [transaction, setTransaction] = useState(null);
   const [mensagem, setMensagem] = useState("");
   const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const getTransaction = async () => {
@@ -19,12 +18,12 @@ const DetalhesTransaction = () => {
         const transactionData = await ApiService.obterTransacaoPorId(transactionId);
 
         if (transactionData.status === 200) {
-            setTransaction(transactionData.transaction);
-            setStatus(transactionData.transaction.status);
+            setTransaction(transactionData.transacao);
+            setStatus(transactionData.transacao.status);
         }
       } catch (error) {
         showMensagem(
-          error.response?.data?.mensagem || "Erro ao obter uma transação: " + error
+          "Erro ao obter uma transação: " + error
         );
       }
     };
@@ -37,12 +36,11 @@ const DetalhesTransaction = () => {
 const handleUpdateStatus = async()=>{
     try {
         ApiService.atualizarStatusTransacao(transactionId, status);
-        navigate("/transaction")
+        navigate("/transactions")
     } catch (error) {
         showMensagem(
-          error.response?.data?.mensagem || "Erro atualizando uma transação: " + error
-        );
-        
+          "Erro atualizando uma transação: " + error
+        );        
     }
 }
 
@@ -57,7 +55,7 @@ const handleUpdateStatus = async()=>{
   return(
     <Layout>
         
-      {mensagem && <p className="mensagem">{mensagem}</p>}
+      {mensagem && <p className="message">{mensagem}</p>}
       <div className="transaction-details-page">
         {transaction && (
            <>
@@ -77,31 +75,32 @@ const handleUpdateStatus = async()=>{
                 )}
            </div>
 
-           {/* Produto information of the transaction */}
+           {/* Informação do produto da transação */}
+           {transaction.produtos && (
            <div className="section-card">
                 <h2>Informação do Produto</h2>
                 <p>Nome: {transaction.produto.name}</p>                
                 <p>Preço: {transaction.produto.preco.toFixed(2)}</p>
                 <p>Qtd em Estoque: {transaction.produto.qtdEstoque}</p>
-                <p>Descricao: {transaction.produto.descricao}</p>
+                <p>Descricao: {transaction.produto.description}</p>
 
                 {transaction.produto.imageUrl && (
-                <img src={transaction.produto.imageUrl} alt={transaction.produto.name} />
-                )}
-                
-           </div>   
+                <img src={transaction.produto.imagemUrl} alt={transaction.produto.name} />
+                )}                
+           </div> 
+           )}  
 
-           {/* Fornecedor information who made the transaction */}
+           {/* Informação do fornecedor que fez a transacão */}
            {transaction.fornecedores && (
            <div className="section-card">
                 <h2>Informação Fornecedor</h2>
-                <p>Name: {transaction.fornecedor.name}</p>
-                <p>Contact Address: {transaction.fornecedor.contato}</p>
-                <p>Address: {transaction.fornecedor.endereco}</p> 
+                <p>Nome: {transaction.fornecedor.nomeFornecedor}</p>
+                <p>Contato: {transaction.fornecedor.contato}</p>
+                <p>Endereço: {transaction.fornecedor.endereco}</p> 
            </div>
            )}
 
-           {/* UPDATE TRANSACTION STATUS */}
+           {/* Atualiza status transação */}
            <div className="section-card transaction-staus-update">
             <label>Status: </label>
             <select 

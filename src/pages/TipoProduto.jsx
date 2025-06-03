@@ -1,125 +1,125 @@
-import React, {useEffect, useState} from "react";
-import Layout from '../components/Layout'
-import ApiService from '../services/ApiService'
+import React, { useEffect, useState } from "react";
+import Layout from "../components/Layout";
+import ApiService from "../services/ApiService";
 
-const TipoProduto = () => {   
-  const [tiposProduto, setTiposProduto] = useState([]);
+const TipoProduto = () => {
+  const [tipoProdutos, setTipoProdutos] = useState([]);
   const [nome, setNome] = useState("");
-  const [mensagem, setMensagem] = useState("");
+  const [message, setMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [editingTiposProdutoId, setEditingTiposProdutoId] = useState(null);
+  const [editingTipoProdutoId, setEditingTipoProdutoId] = useState(null);
 
-  //busca os tipos de produto do backend
   useEffect(() => {
     const getTipoProdutos = async () => {
       try {
         const response = await ApiService.listarTipoProdutos();
-        console.log(response.status);        
-        if(response.status === 200) {
-          console.log("Entrou em setTiposProduto");
-          setTiposProduto(response.tiposProduto)
+        if (response.status === 200) {
+          setTipoProdutos(response.tipoProdutos);
         }
       } catch (error) {
-        mostrarMensagem(error.response?.data?.message);
+        showMessage(
+          "Erro ao listar tipos de produto: " + error
+        );
       }
     };
     getTipoProdutos();
-  }, []);
-
-  //mostrar mensagem ou erros
-  const mostrarMensagem = (msg) => {
-    setMensagem(msg);
+  }, []);  
+  
+  const adicionarTipoProduto = async () => {
+    if (!nome) {       
+      showMessage("O tipo do produto não pode ser vazio.");            
+      return;
+    }
+    try {     
+      await ApiService.criarTipoProduto({ nome: nome });      
+      showMessage("Tipo de produto adicionado com sucesso");
+      setNome(""); 
+      window.location.reload(); 
+    } catch (error) {      
+        showMessage(
+        "Error ao criar um tipo de produto: " + error
+        );     
+    }
+  };   
+  
+  const editarTipoProduto = async () => {
+    try {
+      await ApiService.atualizarTipoProduto(editingTipoProdutoId, { nome: nome, });
+      showMessage("Tipo de produto atualizado com sucesso");
+      setIsEditing(false);
+      setNome(""); 
+      window.location.reload(); 
+    } catch (error) {
+      showMessage(
+        "Erro de atualização: " + error
+      );
+    }
+  };
+  
+  const handleEditTipoProduto = (tipoProduto) => {
+    setIsEditing(true);
+    setEditingTipoProdutoId(tipoProduto.id);
+    setNome(tipoProduto.nome);
+  };
+  
+  const handleDeleteTipoProduto = async (tipoProdutoId) => {
+    if (window.confirm("Tem certeza que deseja deletar este tipo?")) {
+      try {
+        await ApiService.removerTipoProduto(tipoProdutoId);
+        showMessage("Tipo de produto removido com sucesso.");
+        window.location.reload(); 
+      } catch (error) {
+        showMessage(
+          "Erro ao remover tipo produto: " + error
+        );
+      }
+    }
+  };
+  
+  const showMessage = (msg) => {
+    setMessage(msg);
     setTimeout(() => {
-      setMensagem("");
+      setMessage("");
     }, 4000);
   };
 
-  //Adicionar tipo de produto
-  const adicionarTipoProdutos = async () => {
-    if (!nome) {
-      mostrarMensagem("O nome do tipo produto não pode ser vazio");
-      return;
-    }
-    try {
-      await ApiService.criarTipoProduto({nome});
-      mostrarMensagem("Tipo de produto criado com sucesso");
-      setNome("");
-      window.location.reload();
-    } catch (error) {
-      mostrarMensagem(error.response?.data?.mensagem);
-    }
-  }
-
-  //Editar tipo de produto
-  const editarTiposProduto = async () => {
-    try {
-      await ApiService.atualizarTipoProduto(editingTiposProdutoId, {nome});
-      mostrarMensagem("Tipo de produto atualizado com sucesso")
-      setIsEditing(false)
-      window.location.reload();
-    } catch (error) {
-      mostrarMensagem(error.response?.data?.mensagem);
-    }
-  }  
-
-  //Popula os dados de tipo produto
-  const handleEditTiposProduto = (tipoProduto) => {
-    setIsEditing(true);
-    setEditingTiposProdutoId(tipoProduto.id);
-    setNome(tipoProduto.nome);
-  };
-
-  //deleta tipo de produto
-  const handleDeleteCategory = async (tiposProdutoId) => {
-    if (window.confirm("Tem certeza que deseja remover tipo produto?")) {
-      try {
-        await ApiService.removerTiposProduto(tiposProdutoId);
-        mostrarMensagem("Tipo produto removido com sucesso.");
-        window.location.reload();
-      } catch (error) {
-        mostrarMensagem(error.response?.data?.mensagem);
-      }
-    }
-  }  
-
   return (
-    <Layout>
-      { mensagem && <div className="message">{mensagem}</div>}
-
+    <Layout>      
+      {message && <div className="message">{message}</div>}   
       <div className="category-page">
         <div className="category-header">
-          <h1>Tipos de produto</h1>
+          <h1>Tipos de Produto</h1>
           <div className="add-cat">
             <input value={nome} type="text"
-              placeholder="Nome tipo produto" 
-              onChange={(e) => setNome(e.target.value)} />             
+              placeholder="Nome tipo produto"
+              onChange={(e) => setNome(e.target.value)}
+            />
 
-              {!isEditing ? (
-                <button onClick={adicionarTipoProdutos}>Adicionar</button>
-              ) : (
-                <button onClick={editarTiposProduto}>Editar Tipo</button>
-              )}
+            {!isEditing ? (
+              <button onClick={adicionarTipoProduto}>Adicionar</button>
+            ) : (
+              <button onClick={editarTipoProduto}>Editar</button>
+            )}
           </div>
         </div>
+      </div>
 
-        { tiposProduto && (
+      {tipoProdutos && (
           <ul className="category-list">
-
-            {tiposProduto.map((tipoProduto) => (
-            <li className="category-item" key={tipoProduto.id} >
-              <span>{tipoProduto.nome}</span>
-
-              <div className="category-actions">
-                <button className="edit-btn" onClick={() => handleEditTiposProduto(tipoProduto)}>Editar</button>
-                <button className="delete-btn" onClick={() => handleDeleteCategory(tipoProduto.id)}>Remover</button>
-              </div>
-            </li>
+            {tipoProdutos.map((tipoProduto) => (
+              <li className="category-item" key={tipoProduto.id}>
+                <span>{tipoProduto.nome}</span>
+                
+                <div className="category-actions">
+                  <button onClick={() => handleEditTipoProduto(tipoProduto)}>Editar</button>
+                  <button onClick={() => handleDeleteTipoProduto(tipoProduto.id)}>Remover</button>
+                </div>                
+              </li>
             ))}
           </ul>
-        )}        
-      </div>
+        )}      
     </Layout>
-  );
+  )
+}
 
-};
-export default TipoProduto
+export default TipoProduto;

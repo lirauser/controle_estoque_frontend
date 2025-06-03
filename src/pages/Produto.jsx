@@ -27,7 +27,7 @@ const Produto = () => {
   const handleDeleteProduto = async (produtoId) => {
     if (window.confirm("Tem certeza que quer remover este produto?")) {
       try {
-        await ApiService.deleteProduto(produtoId);
+        await ApiService.removerProduto(produtoId);
         showMessage("Produto removido com sucesso.");
         window.location.reload();
       } catch (error) {
@@ -55,8 +55,7 @@ const Produto = () => {
           <h1>Produtos</h1>
           <button
             className="add-product-btn"
-            onClick={() => navigate("/add-produto")}>
-            Adicionar
+            onClick={() => navigate("/add-produto")}>Adicionar
           </button>
         </div>
 
@@ -73,8 +72,8 @@ const Produto = () => {
                 </div>
 
                 <div className="product-actions">
-                    <button className="edit-btn" onClick={()=> navigate(`/edit-produto/${produto.id}`)}>Edit</button>
-                    <button className="delete-btn" onClick={()=> handleDeleteProduto(produto.id)}>Delete</button>
+                    <button className="edit-btn" onClick={()=> navigate(`/edit-produto/${produto.id}`)}>Editar</button>
+                    <button className="delete-btn" onClick={()=> handleDeleteProduto(produto.id)}>Remover</button>
                 </div>
               </div>
             ))}

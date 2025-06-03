@@ -5,6 +5,7 @@ const NavBar = () => {
     return (
         <div className="sidebar">
             <h1 className="nexdom">NEXDOM</h1>
+            <h4 className="nexdom-subtitulo">Controle de Estoque</h4>
             <h1 className="nav-links">
                 <li><Link to="/">Tipo Produto</Link></li>
                 <li><Link to="/produto">Produto</Link></li>

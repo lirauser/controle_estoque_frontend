@@ -10,7 +10,7 @@
 /* SIDEBAR STYLING */
 
 .sidebar {
-  width: 13%;
+  width: 14%;
   height: 100vh;
   background: linear-gradient(135deg, #1c1e21, #3a3f44);
   color: #f1f1f1;
@@ -22,12 +22,21 @@
   transition: all 0.3s ease;
 }
 
-.ims {
-  margin-left: 20%;
+.nexdom {
+  margin-left: 16%;
   color: #008080;
   padding: 0;
   margin-bottom: 0;
   font-weight: 900;
+}
+
+.nexdom-subtitulo {
+  margin-left: 16%;
+  color: #807c00;
+  padding: 0;
+  margin-bottom: 0;
+  font-weight: 900;
+  font-size: 15px;
 }
 
 .nav-links {
@@ -158,7 +167,7 @@
   display: flex;
   justify-content: space-between;
   padding: 18px;
-  margin: 5px;
+  margin-left: 20px;
   font-size: 20px;
   background-color: #f9f9f9;
   border-bottom: 1px solid #eee;
@@ -169,6 +178,10 @@
 
 .category-item:hover {
   background-color: #f9ffff;
+}
+
+.category-actions {
+  margin-right: 320px; 
 }
 
 .category-actions button {
@@ -197,7 +210,7 @@
   align-items: center;
   margin-bottom: 30px;
   color: #008080;
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
 .supplier-header button {
@@ -211,6 +224,7 @@
 
 .add-sup {
   margin: 0 auto;
+  margin-right: 320px;
 }
 
 .supplier-list {
@@ -223,7 +237,7 @@
   display: flex;
   justify-content: space-between;
   padding: 18px;
-  margin: 5px;
+  margin-left: 20px;
   font-size: 20px;
   background-color: #f9f9f9;
   border-bottom: 1px solid #eee;
@@ -234,6 +248,10 @@
 
 .supplier-item:hover {
   background-color: #f9ffff;
+}
+
+.supplier-actions {
+  margin-right: 320px;
 }
 
 .supplier-actions button {
@@ -331,6 +349,7 @@
 
 .product-header h1 {
   font-size: 2rem;
+  margin-left: 12px;
   font-weight: bold;
   color: #008080;
 }
@@ -344,6 +363,7 @@
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease;
+  margin-right: 300px;
 }
 
 .add-product-btn:hover {
@@ -501,7 +521,7 @@
 }
 
 .product-form-page button {
-  padding: 12px 20px;
+  padding: 15px 32px;
   background-color: #008080;
   color: white;
   border: none;
@@ -579,17 +599,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #008080;
+  margin-left: 12px;
   margin-bottom: 20px;
 }
 
 .transaction-search {
   display: flex;
   gap: 10px;
+  margin: 0 auto;
 }
 .transaction-search input {
   border: 1px solid #008080;
   padding: 10px;
-  border-radius: 4px;
+  border-radius: 4px;  
 }
 
 .transactions-table {
@@ -757,6 +780,38 @@ button:hover {
   .transaction-status-update select {
     margin-bottom: 10px;
   }
+}
+
+
+/* PAGENATION STYLING */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #555;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+  background-color: #2F4F4F;
+}
+
+.pagination-button.active {
+  background-color: #008080;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination-button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
 }
 
 

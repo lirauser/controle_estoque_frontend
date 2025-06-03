@@ -64,7 +64,6 @@ const Compra = () => {
     setQtd("");
   };
 
-  //metjhod to show mensagem or errors
   const showMensagem = (msg) => {
     setMensagem(msg);
     setTimeout(() => {
@@ -80,9 +79,7 @@ const Compra = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Selecionar produto</label>
-
-            <select
-              value={produtoId}
+            <select value={produtoId}
               onChange={(e) => setProductId(e.target.value)}
               required
             >
@@ -134,15 +131,13 @@ const Compra = () => {
 
           <div className="form-group">
             <label>Quantidade</label>
-            <input
-              type="number"
+            <input type="number"
               value={qtd}
               onChange={(e) => setQtd(e.target.value)}
               required
             />
           </div>
-
-          <button type="submit">Comprar produto</button>
+          <button type="submit">Adquirir produtos</button>
         </form>
       </div>
     </Layout>
