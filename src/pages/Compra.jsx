@@ -7,8 +7,7 @@ const Compra = () => {
   const [fornecedores, setFornecedores] = useState([]);
   const [produtoId, setProductId] = useState("");
   const [fornecedorId, setFornecedorId] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [nota, setNota] = useState("");
+  const [descricao, setDescricao] = useState("");  
   const [qtd, setQtd] = useState("");
   const [mensagem, setMensagem] = useState("");
 
@@ -40,8 +39,7 @@ const Compra = () => {
       produtoId,
       qtd: parseInt(qtd),
       fornecedorId,
-      descricao,
-      nota,
+      descricao,      
     };
     console.log(body)
 
@@ -59,8 +57,7 @@ const Compra = () => {
   const resetForm = () => {
     setProductId("");
     setFornecedorId("");
-    setDescricao("");
-    setNota("");
+    setDescricao("");    
     setQtd("");
   };
 
@@ -117,17 +114,7 @@ const Compra = () => {
               onChange={(e) => setDescricao(e.target.value)}
               required
             />
-          </div>
-
-          <div className="form-group">
-            <label>Nota</label>
-            <input
-              type="text"
-              value={nota}
-              onChange={(e) => setNota(e.target.value)}
-              required
-            />
-          </div>
+          </div>          
 
           <div className="form-group">
             <label>Quantidade</label>

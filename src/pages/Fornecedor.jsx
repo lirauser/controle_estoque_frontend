@@ -9,7 +9,7 @@ const Fornecedor = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //fetch all fornecedores
+   
     const getFornecedores = async () => {
       try {
         const responseData = await ApiService.obterFornecedores();        
@@ -35,8 +35,6 @@ const Fornecedor = () => {
     }, 4000);
   };
 
-
-//Delete Fornecedor
 const handleDeleteFornecedor = async (fornecedorId) => {
   try {
     if (window.confirm("Are you sure you want to delete this fornecedor? ")) {

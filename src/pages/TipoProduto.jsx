@@ -70,7 +70,7 @@ const TipoProduto = () => {
         window.location.reload(); 
       } catch (error) {
         showMessage(
-          "Erro ao remover tipo produto: " + error
+          "Erro ao remover tipo de produto. Por favor remova todos os produtos atribuídos a este tipo. "
         );
       }
     }

@@ -58,8 +58,7 @@ const AddEditFornecedor = () => {
       );
     }
   };
-
-  //metjhod to show mensagem or errors
+  
   const showMensagem = (msg) => {
     setMensagem(msg);
     setTimeout(() => {
@@ -76,7 +75,9 @@ const AddEditFornecedor = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Nome fornecedor</label>
-            <input value={nomeFornecedor} onChange={(e) => setNomeFornecedor(e.target.value)}
+            <input 
+              value={nomeFornecedor} 
+              onChange={(e) => setNomeFornecedor(e.target.value)}
               required
               type="text"
             />

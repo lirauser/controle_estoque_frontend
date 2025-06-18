@@ -5,8 +5,7 @@ import ApiService from "../services/ApiService";
 const Venda = () => {
   const [produtos, setProdutos] = useState([]);
   const [produtoId, setProdutoId] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [nota, setNota] = useState("");
+  const [descricao, setDescricao] = useState("");  
   const [qtd, setQtd] = useState("");
   const [mensagem, setMensagem] = useState("");
 
@@ -34,8 +33,7 @@ const Venda = () => {
     }
     const body = {
       produtoId,
-      qtd: parseInt(qtd),
-  
+      qtd: parseInt(qtd),  
     };
 
     try {
@@ -51,8 +49,7 @@ const Venda = () => {
 
   const resetForm = () => {
     setProdutoId("");
-    setDescricao("");
-    setNota("");
+    setDescricao("");    
     setQtd("");
   };
 
@@ -106,17 +103,7 @@ const Venda = () => {
               onChange={(e) => setDescricao(e.target.value)}
               required
             />
-          </div>
-
-          <div className="form-group">
-            <label>Nota</label>
-            <input
-              type="text"
-              value={nota}
-              onChange={(e) => setNota(e.target.value)}
-              required
-            />
-          </div>
+          </div>          
 
           <button type="submit">Vender produto</button>
         </form>

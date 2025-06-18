@@ -4,14 +4,13 @@ import ApiService from "../services/ApiService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddEditProduto = () => {
-  const {produtoId} = useParams("");
-  const [name, setName] = useState(""); 
+  const { produtoId } = useParams("");
+  const [codigo, setCodigo] = useState("");
+  const [name, setName] = useState("");   
   const [preco, setPreco] = useState("");
   const [qtdEstoque, setQtdEstoque] = useState("");
   const [tipoProdutoId, setTipoProdutoId] = useState("");
-  const [description, setDescription] = useState("");
-  const [imagemArquivo, setImagemArquivo] = useState(null);
-  const [imagemUrl, setImagemUrl] = useState("");
+  const [description, setDescription] = useState("");   
   const [isEditing, setIsEditing] = useState(false);
   const [tipoProdutos, setTipoProdutos] = useState([]);
   const [mensagem, setMensagem] = useState("");
@@ -37,14 +36,14 @@ const AddEditProduto = () => {
         try {
           const produtoData = await ApiService.buscarProdutoPorId(produtoId);
           if (produtoData.status === 200) {
-            setName(produtoData.name);            
-            setPreco(produtoData.preco);
-            setQtdEstoque(produtoData.qtdEstoque);
-            setTipoProdutoId(produtoData.tipoProdutoId);
-            setDescription(produtoData.description);
-            setImagemUrl(produtoData.imagemUrl);
+            setCodigo(produtoData.produto.codigo);
+            setName(produtoData.produto.name);            
+            setPreco(produtoData.produto.preco);
+            setQtdEstoque(produtoData.produto.qtdEstoque);
+            setTipoProdutoId(produtoData.produto.tipoProduto.id);
+            setDescription(produtoData.produto.description);            
           } else {
-            mostrarMensagem(produtoData.mensagem);
+            mostrarMensagem(produtoData.produto.mensagem);
           }
         } catch (error) {
           mostrarMensagem(
@@ -54,38 +53,27 @@ const AddEditProduto = () => {
         }
       }
     };
-
     fetchTipoProdutos();
     if (produtoId) fetchProdutoById();
   }, [produtoId]);
 
-  //metjhod to show mensagem or errors
+  
   const mostrarMensagem = (msg) => {
     setMensagem(msg);
     setTimeout(() => {
       setMensagem("");
     }, 4000);
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImagemArquivo(file);
-    const reader = new FileReader();
-    reader.onloadend = () => setImagemUrl(reader.result);
-    reader.readAsDataURL(file);
-  };
+  };  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", name);    
-    formData.append("preco", preco);
-    formData.append("qtdEstoque", qtdEstoque);
-    formData.append("tipoProdutoId", tipoProdutoId);
-    formData.append("description", description);
-    if (imagemArquivo) {
-      formData.append("imagemArquivo", imagemArquivo);
-    }
+      formData.append("codigo", codigo);
+      formData.append("name", name); 
+      formData.append("preco", preco);
+      formData.append("qtdEstoque", qtdEstoque);
+      formData.append("tipoProdutoId", tipoProdutoId);
+      formData.append("description", description);    
 
     try {
       if (isEditing) {
@@ -113,8 +101,18 @@ const AddEditProduto = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Nome produto</label>
-            <input value={name} type="text"
+            <input value={name} 
+              type="text"
               onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Código do produto</label>
+            <input value={codigo}
+              type="text"
+              onChange={(e) => setCodigo(e.target.value)}
               required
             />
           </div>          
@@ -129,7 +127,7 @@ const AddEditProduto = () => {
           </div>
 
           <div className="form-group">
-            <label>Preço</label>
+            <label>Preço no fornecedor</label>
             <input type="number"
               value={preco}
               onChange={(e) => setPreco(e.target.value)}
@@ -153,19 +151,11 @@ const AddEditProduto = () => {
               <option value="">Selecione um tipo</option>
               {tipoProdutos.map((tipoProduto) => (
                 <option key={tipoProduto.id} value={tipoProduto.id}>
-                  {tipoProduto.name}
+                  {tipoProduto.nome}
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className="form-group">
-            <label>Imagem produto</label>
-            <input type="file" onChange={handleImageChange} />
-            {imagemUrl && (
-              <img src={imagemUrl} alt="preview" className="image-preview" />
-            )}
-          </div>                            
+          </div>                                    
             <button type="submit">{isEditing ? "Editar" : "Adicionar"}</button>          
         </form>
       </div>

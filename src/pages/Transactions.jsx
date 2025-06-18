@@ -17,7 +17,7 @@ const Transactions = () => {
         const transactionData = await ApiService.listarTransacoes(valueToSearch);
 
         if (transactionData.status === 200) {          
-          console.log("Pegou as transações!!");
+          console.log("Transação OK.");
           console.log("Transacao: " + transactionData.transacoes);
           setTransacoes(transactionData.transacoes);
         }
@@ -27,28 +27,22 @@ const Transactions = () => {
         );
       }
     };
-
     getTransacoes();
   }, [valueToSearch]);
-
-
-  //Method to show message or errors
+  
   const showMessage = (msg) => {
     setMensagem(msg);
     setTimeout(() => {
       setMensagem("");
     }, 4000);
   };
-
-
-  //handle search
+  
   const handleSearch = () =>{
     console.log("Search hit")
     console.log("FILTER IS: " + filter)       
     setValueToSearch(filter)
   }
-
-  //Navigate to transacoes details page
+ 
   const navigateToTransactionDetailsPage = (transactionId) =>{
     navigate(`/transactions/${transactionId}`);
   }
@@ -65,7 +59,7 @@ const Transactions = () => {
             <table className="transactions-table">
                 <thead>
                     <tr>
-                        <th>TIPO</th>
+                        <th>TIPO</th>                        
                         <th>STATUS</th>
                         <th>PREÇO TOTAL</th>
                         <th>QTD MOVIMENTADA</th>

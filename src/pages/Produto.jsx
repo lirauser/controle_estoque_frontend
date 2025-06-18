@@ -62,13 +62,13 @@ const Produto = () => {
         {produtos && (
           <div className="product-list">
             {produtos.map((produto) => (
-              <div key={produto.id} className="product-item">
-                <img className="product-image" src={produto.imagemUrl} alt={produto.name} />
-
+              <div key={produto.id} className="product-item">                
                 <div className="product-info">
-                    <h3 className="name">{produto.name}</h3>                    
-                    <p className="price">Price: {produto.preco}</p>
-                    <p className="quantity">Quantity: {produto.qtdEstoque}</p>
+                    <h3 className="name">{produto.name}</h3>
+                    <p className="codigo">Código: {produto.codigo}</p>
+                    <p></p>                  
+                    <p className="price">Preço: {produto.preco}</p>
+                    <p className="quantity">Quantidade: {produto.qtdEstoque}</p>
                 </div>
 
                 <div className="product-actions">

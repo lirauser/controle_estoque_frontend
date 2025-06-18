@@ -32,25 +32,12 @@ const DetalhesTransaction = () => {
   }, [transactionId]);
 
 
-//update transaction status
-const handleUpdateStatus = async()=>{
-    try {
-        ApiService.atualizarStatusTransacao(transactionId, status);
-        navigate("/transactions")
-    } catch (error) {
-        showMensagem(
-          "Erro atualizando uma transação: " + error
-        );        
-    }
-}
-
-  //Method to show mensagem or errors
-  const showMensagem = (msg) => {
-    setMensagem(msg);
-    setTimeout(() => {
-      setMensagem("");
-    }, 4000);
-  };
+const showMensagem = (msg) => {
+  setMensagem(msg);
+  setTimeout(() => {
+    setMensagem("");
+  }, 4000);
+};
 
   return(
     <Layout>
@@ -64,8 +51,7 @@ const handleUpdateStatus = async()=>{
                 <h2>Informação da Transação</h2>
                 <p>Tipo: {transaction.tipoMovimentacao}</p>
                 <p>Status: {transaction.status}</p>
-                <p>Descrição: {transaction.descricao}</p>
-                <p>Nota: {transaction.nota}</p>
+                <p>Descrição: {transaction.descricao}</p>                
                 <p>Total de Produtos: {transaction.totalProdutos}</p>
                 <p>Preço Total: {transaction.totalPreco.toFixed(2)}</p>
                 <p>Criado em: {new Date(transaction.criadoEm).toLocaleString()}</p>
@@ -82,11 +68,7 @@ const handleUpdateStatus = async()=>{
                 <p>Nome: {transaction.produto.name}</p>                
                 <p>Preço: {transaction.produto.preco.toFixed(2)}</p>
                 <p>Qtd em Estoque: {transaction.produto.qtdEstoque}</p>
-                <p>Descricao: {transaction.produto.description}</p>
-
-                {transaction.produto.imageUrl && (
-                <img src={transaction.produto.imagemUrl} alt={transaction.produto.name} />
-                )}                
+                <p>Descricao: {transaction.produto.description}</p>                     
            </div> 
            )}  
 
@@ -98,22 +80,8 @@ const handleUpdateStatus = async()=>{
                 <p>Contato: {transaction.fornecedor.contato}</p>
                 <p>Endereço: {transaction.fornecedor.endereco}</p> 
            </div>
-           )}
-
-           {/* Atualiza status transação */}
-           <div className="section-card transaction-staus-update">
-            <label>Status: </label>
-            <select 
-            value={status}
-            onChange={(e)=> setStatus(e.target.value)}
-            >
-                <option value="PENDENTE">PENDENTE</option>
-                <option value="PROCESSANDO">PROCESSANDO</option>
-                <option value="CONCLUIDO">CONCLUÍDO</option>
-                <option value="CANCELADO">CANCELADO</option>
-            </select>
-            <button onClick={()=>handleUpdateStatus()}>Atualizar status</button>
-           </div>
+           )}         
+          
            </>
         )}
       </div>
