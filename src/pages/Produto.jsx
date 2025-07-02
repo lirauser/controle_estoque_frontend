@@ -13,7 +13,7 @@ const Produto = () => {
     const getProdutos = async () => {
       try {
         const produtoData = await ApiService.listarProdutos(); 
-        setProdutos(produtoData.produtos)     
+        setProdutos(produtoData.produtos)    
       } catch (error) {
         showMessage(
           error.response?.data?.message || "Erro ao obter produtos: " + error
@@ -59,12 +59,12 @@ const Produto = () => {
           </button>
         </div>
 
-        {produtos && (
-          <div className="product-list">
-            {produtos.map((produto) => (
-              <div key={produto.id} className="product-item">                
+        {produtos && (          
+          <div className="product-list">            
+            {produtos.map((produto) => (              
+              <div key={produto.id} className="product-item">                                
                 <div className="product-info">
-                    <h3 className="name">{produto.name}</h3>
+                    <h3 className="name">{produto.name}</h3>                    
                     <p className="codigo">Código: {produto.codigo}</p>
                     <p></p>                  
                     <p className="price">Preço: {produto.preco}</p>

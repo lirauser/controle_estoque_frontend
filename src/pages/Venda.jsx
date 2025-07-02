@@ -33,7 +33,7 @@ const Venda = () => {
     }
     const body = {
       produtoId,
-      qtd: parseInt(qtd),  
+      qtd: parseInt(qtd),
     };
 
     try {
@@ -53,11 +53,10 @@ const Venda = () => {
     setQtd("");
   };
 
-  //metjhod to show mensagem or errors
   const showMensagem = (msg) => {
     setMensagem(msg);
     setTimeout(() => {
-      setMensagem("");
+    setMensagem("");
     }, 4000);
   };
 

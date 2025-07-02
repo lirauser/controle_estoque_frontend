@@ -46,7 +46,7 @@ const showMensagem = (msg) => {
       <div className="transaction-details-page">
         {transaction && (
            <>
-           {/* Transaction base information */}
+           {/* Informação básica */}
            <div className="section-card">
                 <h2>Informação da Transação</h2>
                 <p>Tipo: {transaction.tipoMovimentacao}</p>
@@ -54,7 +54,7 @@ const showMensagem = (msg) => {
                 <p>Descrição: {transaction.descricao}</p>                
                 <p>Total de Produtos: {transaction.totalProdutos}</p>
                 <p>Preço Total: {transaction.totalPreco.toFixed(2)}</p>
-                <p>Criado em: {new Date(transaction.criadoEm).toLocaleString()}</p>
+                <p>Transação feita em: {new Date(transaction.criadoEm).toLocaleString()}</p>
 
                 {transaction.atualizadoEm && (
                 <p>Atualizado em: {new Date(transaction.atualizadoEm).toLocaleString()}</p>

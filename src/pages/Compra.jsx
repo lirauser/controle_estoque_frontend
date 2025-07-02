@@ -40,8 +40,7 @@ const Compra = () => {
       qtd: parseInt(qtd),
       fornecedorId,
       descricao,      
-    };
-    console.log(body)
+    };    
 
     try {
       const respone = await ApiService.comprarProduto(body);

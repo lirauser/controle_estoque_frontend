@@ -16,9 +16,7 @@ const Transactions = () => {
       try {
         const transactionData = await ApiService.listarTransacoes(valueToSearch);
 
-        if (transactionData.status === 200) {          
-          console.log("Transação OK.");
-          console.log("Transacao: " + transactionData.transacoes);
+        if (transactionData.status === 200) {         
           setTransacoes(transactionData.transacoes);
         }
       } catch (error) {
@@ -37,9 +35,7 @@ const Transactions = () => {
     }, 4000);
   };
   
-  const handleSearch = () =>{
-    console.log("Search hit")
-    console.log("FILTER IS: " + filter)       
+  const handleSearch = () =>{           
     setValueToSearch(filter)
   }
  

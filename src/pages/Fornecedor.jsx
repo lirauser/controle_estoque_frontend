@@ -13,8 +13,7 @@ const Fornecedor = () => {
     const getFornecedores = async () => {
       try {
         const responseData = await ApiService.obterFornecedores();        
-        if (responseData.status === 200) { 
-          console.log("Fornecedores: " + responseData.fornecedores);         
+        if (responseData.status === 200) {                   
           setFornecedores(responseData.fornecedores);
         } else {
           showMensagem(responseData.mensagem);

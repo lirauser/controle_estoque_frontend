@@ -44,7 +44,7 @@ const TipoProduto = () => {
   
   const editarTipoProduto = async () => {
     try {
-      await ApiService.atualizarTipoProduto(editingTipoProdutoId, { nome: nome, });
+      await ApiService.atualizarTipoProduto(editingTipoProdutoId, { nome: nome });
       showMessage("Tipo de produto atualizado com sucesso");
       setIsEditing(false);
       setNome(""); 
@@ -58,19 +58,19 @@ const TipoProduto = () => {
   
   const handleEditTipoProduto = (tipoProduto) => {
     setIsEditing(true);
-    setEditingTipoProdutoId(tipoProduto.id);
-    setNome(tipoProduto.nome);
+    setEditingTipoProdutoId(tipoProduto.tipoId);    
+    setNome(tipoProduto.nome);    
   };
   
-  const handleDeleteTipoProduto = async (tipoProdutoId) => {
+  const handleDeleteTipoProduto = async (tipoProdutoId) => {    
     if (window.confirm("Tem certeza que deseja deletar este tipo?")) {
-      try {
+      try {        
         await ApiService.removerTipoProduto(tipoProdutoId);
         showMessage("Tipo de produto removido com sucesso.");
         window.location.reload(); 
       } catch (error) {
         showMessage(
-          "Erro ao remover tipo de produto. Por favor remova todos os produtos atribuídos a este tipo. "
+          "Erro ao remover tipo de produto. " + error
         );
       }
     }
@@ -107,12 +107,12 @@ const TipoProduto = () => {
       {tipoProdutos && (
           <ul className="category-list">
             {tipoProdutos.map((tipoProduto) => (
-              <li className="category-item" key={tipoProduto.id}>
+              <li key={tipoProduto.tipoId} className="category-item">
                 <span>{tipoProduto.nome}</span>
                 
                 <div className="category-actions">
                   <button onClick={() => handleEditTipoProduto(tipoProduto)}>Editar</button>
-                  <button onClick={() => handleDeleteTipoProduto(tipoProduto.id)}>Remover</button>
+                  <button onClick={() => handleDeleteTipoProduto(tipoProduto.tipoId)}>Remover</button>
                 </div>                
               </li>
             ))}

@@ -5,8 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const AddEditProduto = () => {
   const { produtoId } = useParams("");
-  const [codigo, setCodigo] = useState("");
-  const [name, setName] = useState("");   
+  const [name, setName] = useState("");
+  const [codigo, setCodigo] = useState("");   
   const [preco, setPreco] = useState("");
   const [qtdEstoque, setQtdEstoque] = useState("");
   const [tipoProdutoId, setTipoProdutoId] = useState("");
@@ -34,14 +34,14 @@ const AddEditProduto = () => {
       if (produtoId) {
         setIsEditing(true);
         try {
-          const produtoData = await ApiService.buscarProdutoPorId(produtoId);
-          if (produtoData.status === 200) {
+          const produtoData = await ApiService.buscarProdutoPorId(produtoId);          
+          if (produtoData.status === 200) {            
+            setName(produtoData.produto.name);
             setCodigo(produtoData.produto.codigo);
-            setName(produtoData.produto.name);            
-            setPreco(produtoData.produto.preco);
-            setQtdEstoque(produtoData.produto.qtdEstoque);
-            setTipoProdutoId(produtoData.produto.tipoProduto.id);
-            setDescription(produtoData.produto.description);            
+            setQtdEstoque(produtoData.produto.qtdEstoque);          
+            setPreco(produtoData.produto.preco);           
+            setDescription(produtoData.produto.description);
+            setTipoProdutoId(produtoData.produto.tipoProdutoId); 
           } else {
             mostrarMensagem(produtoData.produto.mensagem);
           }
@@ -54,7 +54,8 @@ const AddEditProduto = () => {
       }
     };
     fetchTipoProdutos();
-    if (produtoId) fetchProdutoById();
+    if (produtoId)       
+      fetchProdutoById();
   }, [produtoId]);
 
   
@@ -65,19 +66,19 @@ const AddEditProduto = () => {
     }, 4000);
   };  
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {   
     e.preventDefault();
     const formData = new FormData();
-      formData.append("codigo", codigo);
-      formData.append("name", name); 
-      formData.append("preco", preco);
+      formData.append("name", name);      
+      formData.append("codigo", codigo);            
       formData.append("qtdEstoque", qtdEstoque);
-      formData.append("tipoProdutoId", tipoProdutoId);
-      formData.append("description", description);    
+      formData.append("preco", preco);
+      formData.append("tipoProdutoId", tipoProdutoId);      
+      formData.append("description", description);      
 
     try {
       if (isEditing) {
-        formData.append("produtoId", produtoId);
+        formData.append("produtoId", produtoId);        
         await ApiService.atualizarProduto(formData);
         mostrarMensagem("Produto atualizado com sucesso.");
       } else {
@@ -101,8 +102,9 @@ const AddEditProduto = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Nome produto</label>
-            <input value={name} 
+            <input 
               type="text"
+              value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
@@ -110,8 +112,9 @@ const AddEditProduto = () => {
 
           <div className="form-group">
             <label>Código do produto</label>
-            <input value={codigo}
+            <input 
               type="text"
+              value={codigo}
               onChange={(e) => setCodigo(e.target.value)}
               required
             />
@@ -128,7 +131,8 @@ const AddEditProduto = () => {
 
           <div className="form-group">
             <label>Preço no fornecedor</label>
-            <input type="number"
+            <input 
+              type="number"
               value={preco}
               onChange={(e) => setPreco(e.target.value)}
               required
@@ -137,7 +141,8 @@ const AddEditProduto = () => {
 
           <div className="form-group">
             <label>Descrição</label>
-            <textarea value={description}
+            <textarea 
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
@@ -150,11 +155,12 @@ const AddEditProduto = () => {
             >
               <option value="">Selecione um tipo</option>
               {tipoProdutos.map((tipoProduto) => (
-                <option key={tipoProduto.id} value={tipoProduto.id}>
+                <option key={tipoProduto.tipoId} value={tipoProduto.tipoId}>
                   {tipoProduto.nome}
                 </option>
               ))}
             </select>
+            
           </div>                                    
             <button type="submit">{isEditing ? "Editar" : "Adicionar"}</button>          
         </form>

@@ -409,7 +409,8 @@
 
 .product-info .codigo,
 .product-info .price,
-.product-info .quantity {
+.product-info .quantity
+.product-info .tipoProduto {
 
   color: #777;
   /* color: #014646; */
